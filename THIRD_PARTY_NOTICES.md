@@ -4,7 +4,7 @@ This inventory records resolved dependency versions and declared licenses. Origi
 
 Native dependencies are resolved for `x86_64-pc-windows-msvc`. Regenerate the inventory when distributing another native platform.
 
-The client project's own license has not yet been selected by its maintainer.
+The client project's own non-commercial license is provided in LICENSE; third-party components remain subject to their own licenses.
 
 | Ecosystem | Package | Version | Declared license |
 | --- | --- | --- | --- |
