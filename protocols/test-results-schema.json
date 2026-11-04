@@ -1,0 +1,168 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "测试执行结果",
+  "version": "1.0",
+  "description": "保存在测试轮次目录下的 results.json，证据字段只保存相对 evidence/ 路径",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "case_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "not_executed",
+              "passed",
+              "failed",
+              "blocked",
+              "skipped",
+              "not_applicable"
+            ]
+          },
+          "actual_result": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "none",
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          },
+          "defect_url": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string",
+                  "description": "相对于当前测试轮次目录的路径"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "image",
+                    "log",
+                    "request_response",
+                    "attachment"
+                  ]
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "mime_type": {
+                  "type": "string"
+                },
+                "added_at": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "path",
+                "name",
+                "type"
+              ]
+            }
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "case_revision": {
+            "type": "integer",
+            "description": "产生该结果的内容修订号"
+          },
+          "needs_retest": {
+            "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "external_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "external-reference-schema.json"
+            }
+          }
+        },
+        "required": [
+          "case_id",
+          "status",
+          "actual_result",
+          "notes",
+          "severity",
+          "evidence"
+        ]
+      }
+    },
+    "case_events": {
+      "type": "array",
+      "items": {
+        "$ref": "case-change-event-schema.json"
+      }
+    },
+    "result_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "event_id",
+          "case",
+          "result"
+        ]
+      }
+    },
+    "tombstones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "event_id",
+          "case_id",
+          "case",
+          "result",
+          "reason",
+          "deleted_at"
+        ]
+      }
+    },
+    "case_change_history": {
+      "type": "array",
+      "description": "保留旧日志；新记录event_id与case_events一致"
+    }
+  },
+  "required": [
+    "version",
+    "run_id",
+    "results"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "测试报告生成清单",
+  "version": "1.0",
+  "description": "保存在 projects/<平台>/<需求>/07-测试报告/<report-id>/report.json，只记录指定测试轮次和模板的来源及生成结果。",
+  "type": "object",
+  "properties": {
+    "version": { "type": "string" },
+    "report_id": { "type": "string" },
+    "requirement_id": { "type": "string" },
+    "platform_id": { "type": "string" },
+    "run_id": { "type": "string" },
+    "template_id": { "type": "string" },
+    "template_version": { "type": "string" },
+    "template_fingerprint": { "type": "string" },
+    "output_type": { "type": "string", "enum": ["markdown", "docx"] },
+    "output_path": { "type": "string" },
+    "created_at": { "type": "string" },
+    "stats": { "type": "object" },
+    "risks": { "type": "string" },
+    "remaining_issues": { "type": "string" },
+    "sources": {
+      "type": "object",
+      "properties": {
+        "requirement": { "type": "string" },
+        "run": { "type": "string" },
+        "snapshot": { "type": "string" },
+        "results": { "type": "string" },
+        "evidence": { "type": "string" }
+      },
+      "required": ["requirement", "run", "snapshot", "results", "evidence"]
+    }
+  },
+  "required": [
+    "version",
+    "report_id",
+    "requirement_id",
+    "platform_id",
+    "run_id",
+    "template_id",
+    "template_version",
+    "output_type",
+    "output_path",
+    "created_at",
+    "stats",
+    "sources"
+  ]
+}

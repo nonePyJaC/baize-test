@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "测试执行轮次",
+  "version": "1.0",
+  "description": "保存在 projects/<平台>/<需求>/06-测试执行与证据/<run-id>/run.json",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "requirement_id": {
+      "type": "string"
+    },
+    "platform_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "case_version_id": {
+      "type": "string"
+    },
+    "case_version": {
+      "type": "integer"
+    },
+    "environment": {
+      "type": "string"
+    },
+    "application_versions": {
+      "type": "string"
+    },
+    "branch": {
+      "type": "string"
+    },
+    "executor": {
+      "type": "string"
+    },
+    "planned_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "execution_scope": {
+      "type": "object",
+      "properties": {
+        "case_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_ids"
+      ]
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
+    },
+    "created_by": {
+      "type": "string"
+    },
+    "working_revision": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "本轮可编辑工作快照修订；不改变case_version_id"
+    },
+    "baseline_fingerprint": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "来源正式版本指纹；旧轮次缺失且无来源时保持null"
+    }
+  },
+  "required": [
+    "version",
+    "run_id",
+    "requirement_id",
+    "platform_id",
+    "name",
+    "case_version_id",
+    "case_version",
+    "execution_scope",
+    "created_at"
+  ]
+}

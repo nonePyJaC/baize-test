@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>白泽 BAIZE</title>
+    <link rel="icon" href="data:," />
+    <style>
+      html, body { width: 100%; height: 100%; margin: 0; background: #fff; }
+      body { overflow: hidden; }
+      #root { width: 100%; height: 100%; }
+      #startup-splash { position: fixed; inset: 0; z-index: 2147483647; display: grid; place-items: center; overflow: hidden; background: #fff; opacity: 1; transition: opacity 400ms ease; }
+      #startup-splash video, #startup-splash img, #startup-splash .startup-wordmark { position: absolute; inset: 0; margin: auto; }
+      #startup-splash video { width: 100%; height: 100%; object-fit: contain; opacity: 1; transition: opacity 180ms ease; }
+      #startup-splash img { width: min(640px, 72vw); max-height: 72vh; object-fit: contain; opacity: 0; transition: opacity 180ms ease; }
+      #startup-splash .startup-wordmark { display: flex; width: max-content; height: max-content; flex-direction: column; align-items: center; gap: 8px; color: #12345b; opacity: 0; transition: opacity 180ms ease; }
+      #startup-splash .startup-wordmark strong { font-family: "Microsoft YaHei", "Noto Sans SC", sans-serif; font-size: clamp(36px, 5vw, 58px); letter-spacing: .1em; }
+      #startup-splash .startup-wordmark span { margin-left: .45em; color: #168aa5; font: 700 clamp(16px, 2vw, 22px)/1 sans-serif; letter-spacing: .45em; }
+      #startup-splash.video-failed video { opacity: 0; }
+      #startup-splash.video-failed img { opacity: 1; }
+      #startup-splash.video-failed:not(.logo-ready) .startup-wordmark { opacity: 1; }
+      #startup-splash.is-fading { opacity: 0; pointer-events: none; }
+    </style>
+    <script type="module" src="/src/startup.ts"></script>
+  </head>
+  <body>
+    <div id="startup-splash" role="img" aria-label="白泽 BAIZE 启动画面">
+      <img id="startup-logo" alt="" />
+      <div class="startup-wordmark" aria-hidden="true"><strong>白泽</strong><span>BAIZE</span></div>
+      <video id="startup-video" autoplay muted playsinline preload="auto" aria-hidden="true"></video>
+    </div>
+    <div id="root"></div>
+  </body>
+</html>

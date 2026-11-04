@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "疑问数据模型",
+  "version": "1.0",
+  "description": "保存在 projects/<平台>/<需求>/02-需求理解与答疑/questions.json",
+  "type": "object",
+  "properties": {
+    "version": { "type": "string" },
+    "requirement_id": { "type": "string" },
+    "questions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/question" }
+    }
+  },
+  "required": ["version", "requirement_id", "questions"],
+  "$defs": {
+    "question": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "question": { "type": "string", "description": "问题内容" },
+        "priority": { "type": "string", "enum": ["P0", "P1", "P2"] },
+        "category": { "type": "string", "description": "问题分类" },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "partial", "answered", "no_need", "void"],
+          "default": "pending"
+        },
+        "owner": { "type": ["string", "null"], "description": "负责人" },
+        "source": {
+          "type": "string",
+          "enum": ["requirement_doc", "product_confirm", "dev_confirm", "api_doc", "env_verified", "temp_assumption"],
+          "description": "回答来源"
+        },
+        "impact": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["analysis", "plan", "testcase", "data", "environment", "report"] },
+          "description": "影响对象"
+        },
+        "answer": {
+          "type": ["string", "null"],
+          "description": "回答正文，Markdown格式"
+        },
+        "answer_format": {
+          "type": "string",
+          "enum": ["markdown", "richtext_json"],
+          "default": "markdown"
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": { "type": "string", "description": "附件相对路径" },
+              "type": { "type": "string", "description": "image/screenshot/file" },
+              "description": { "type": "string" }
+            }
+          }
+        },
+        "created_at": { "type": "string", "format": "date-time" },
+        "answered_at": { "type": ["string", "null"], "format": "date-time" },
+        "version": { "type": "integer", "default": 1 }
+      },
+      "required": ["id", "question", "priority", "status"]
+    }
+  }
+}

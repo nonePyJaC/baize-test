@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CaseChangeEvent",
+  "description": "新语义事件；旧日志经normalizeLegacyChange只读适配，不回写补造历史",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "case_id": {
+      "type": "string"
+    },
+    "action": {
+      "enum": [
+        "added",
+        "modified",
+        "deleted",
+        "moved",
+        "restored",
+        "split",
+        "merged"
+      ]
+    },
+    "source": {
+      "type": "string"
+    },
+    "actor": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "before": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "after": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "changed_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "base_revision": {
+      "type": "integer"
+    },
+    "next_revision": {
+      "type": "integer"
+    },
+    "origin": {
+      "enum": [
+        "human",
+        "ai",
+        "system",
+        "legacy"
+      ]
+    },
+    "authority": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "source_file": {
+      "type": "string"
+    },
+    "source_topic": {
+      "type": "string"
+    },
+    "review_item_ref": {
+      "type": "string"
+    },
+    "related_event_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "related_case_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "event_id",
+    "case_id",
+    "action",
+    "source",
+    "actor",
+    "created_at",
+    "reason",
+    "before",
+    "after",
+    "changed_fields",
+    "base_revision",
+    "next_revision",
+    "origin",
+    "authority"
+  ]
+}

@@ -1,0 +1,79 @@
+# 需求元数据 Schema
+# 协议版本: 1.0
+# 此文件保存在每个需求目录下: projects/<平台>/<需求编号>/requirement.yaml
+
+version: "1.0"
+
+# 需求基本信息
+requirement:
+  id: ""                      # 需求编号，如 DEMO-1001
+  name: ""                    # 需求名称，如 大客户
+  platform: ""                # 所属平台ID，如 foton
+  owner: ""                   # 负责人
+  created_at: ""              # ISO8601 创建时间
+
+# 计划时间
+schedule:
+  planned_test_date: null     # 计划提测时间
+  planned_release_date: null  # 计划上线时间
+  actual_test_date: null      # 实际提测时间
+  actual_release_date: null   # 实际上线时间
+
+# 涉及应用和分支
+applications: []
+  # - name: 门店PC端
+  #   branch: release/demo-1001
+  # - name: 门店APP端
+  #   branch: release/demo-1001
+
+# BB-14 Git资源：可关联多个本地仓库，状态字段由客户端读取后回写
+# git_resources:
+#   - id: frontend-store
+#     application_name: 门店PC端
+#     local_path: /path/to/repository
+#     repository_url: https://example.com/repository.git
+#     current_branch: release/demo-1001
+#     current_commit: ""
+#     expected_branch: release/demo-1001
+#     app_type: frontend
+git_resources: []
+
+# 需求状态
+# 草稿 → 资料收集中 → 需求理解中 → 待答疑 → 测试计划中
+# → 用例设计中 → 用例评审中 → 待提测 → 测试执行中 → 待报告 → 已完成 → 已归档
+status: "草稿"
+current_stage: "draft"
+# stage枚举: draft, collecting, analyzing, pending_qa, planning, testcase_design,
+#   testcase_review, ready_for_test, testing, pending_report, completed, archived
+
+# 阶段检查项
+stage_checklist: []
+  # - stage: analyzing
+  #   items:
+  #     - { id: "理解文档已生成", done: true }
+  #     - { id: "疑问已提取", done: true }
+
+# 阻塞项
+blockers: []
+  # - { id: "", description: "", owner: "", created_at: "" }
+
+# 待确认内容
+pending_reviews: []
+  # - { id: "", type: "requirement_analysis|test_plan|testcase", description: "", created_at: "" }
+
+# 推荐下一步
+next_actions: []
+  # - { id: "", action: "回答3个P0疑问", priority: "high" }
+
+# 客户端访问锁
+client_access:
+  mode: "unlocked"            # unlocked | locked_for_ai
+  locked_at: null             # ISO8601 锁定时间
+  locked_by: null             # 锁定操作者
+  task_id: null               # 关联的AI任务ID
+  note: ""                    # 锁定说明
+  snapshot_path: null         # 锁定前文件指纹快照路径
+
+# 版本历史
+versions: []
+  # - { version: 1, stage: "analyzing", created_at: "", note: "" }

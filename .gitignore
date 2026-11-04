@@ -1,0 +1,36 @@
+# 前端构建产物与依赖
+node_modules/
+dist/
+
+# Rust/Tauri 构建产物
+src-tauri/target/
+src-tauri/gen/schemas/
+
+# 系统与编辑器杂项
+.DS_Store
+Thumbs.db
+*.local
+tools/__pycache__/
+
+# Local application data, workspaces, credentials, diagnostics and release outputs
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.log
+*.dmp
+*.pdb
+.blackbox/
+.playwright-cli/
+.playwright-mcp/
+output/
+release/
+releases/
+settings.json
+api-debug-library.json*
+client.preferences*
+*.xmind
+*.xmind.changes.*

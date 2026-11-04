@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AI会话修订提案（原始提案只新增）",
+  "type": "object",
+  "required": [
+    "proposal_id",
+    "platform_id",
+    "requirement_id",
+    "items"
+  ],
+  "properties": {
+    "proposal_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "platform_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requirement_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "item_id",
+          "target_case_id",
+          "action",
+          "before",
+          "after",
+          "reason",
+          "source_refs",
+          "nature",
+          "status"
+        ],
+        "properties": {
+          "item_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "target_case_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "action": {
+            "enum": [
+              "added",
+              "modified",
+              "deleted"
+            ]
+          },
+          "before": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "after": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_refs": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "nature": {
+            "enum": [
+              "user_request",
+              "developer_suggestion",
+              "ai_suggestion"
+            ]
+          },
+          "status": {
+            "const": "pending"
+          }
+        }
+      }
+    }
+  }
+}

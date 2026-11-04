@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "外部对象引用（不含凭据）",
+  "type": "object",
+  "required": ["connection_id", "provider_id", "entity_type", "external_id", "display_key", "title", "linked_at"],
+  "properties": {
+    "connection_id": {"type": "string"},
+    "provider_id": {"type": "string"},
+    "entity_type": {"type": "string"},
+    "external_id": {"type": "string", "minLength": 1},
+    "display_key": {"type": "string"},
+    "title": {"type": "string"},
+    "url": {"type": "string"},
+    "project_ref": {"type": "string"},
+    "linked_at": {"type": "string"},
+    "role": {"type": "string"},
+    "extensions": {"type": "object"}
+  },
+  "additionalProperties": true
+}

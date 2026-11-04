@@ -1,0 +1,73 @@
+# 白泽工作区配置 Schema
+# 协议版本: 1.0
+# 此文件保存在 .blackbox/workspace.yaml
+
+version: "1.0"
+workspace:
+  name: ""                    # 工作区名称
+  created_at: ""              # ISO8601 创建时间
+  root_path: ""               # 工作区根目录绝对路径
+
+# 目录映射：客户端通过此映射识别目录角色，不依赖中文目录名
+directories:
+  projects: "projects"
+  templates: "templates"
+  knowledge: "knowledge"
+  tools: "tools"
+  archive: "archive"
+  blackbox: ".blackbox"
+
+# 平台列表
+platforms: []
+  # - id: foton
+  #   name: 示例平台
+  #   path: projects/示例平台
+  #   created_at: ""
+
+# 工作区默认项：ID来自当前工作区的平台注册表或模板登记表
+# 默认项写入工作区，随工作区协作，不保存到客户端本地状态
+# defaults:
+#   platform_id: foton
+#   case_template_id: null
+#   report_template_id: null
+defaults:
+  platform_id: null
+  case_template_id: null
+  report_template_id: null
+
+# 索引配置
+index:
+  engine: sqlite
+  db_path: ".blackbox/index.sqlite"
+  fts_enabled: true
+  ignore_patterns:
+    - ".blackbox/index.sqlite"
+    - ".blackbox/logs/*"
+    - "node_modules/*"
+    - "target/*"
+    - "dist/*"
+    - ".git/*"
+    - "__pycache__/*"
+    - "*.pyc"
+    - "*.tmp"
+
+# 文件监听配置
+watcher:
+  enabled: true
+  debounce_ms: 500
+  ignore_patterns:
+    - ".blackbox/index.sqlite"
+    - ".blackbox/logs/*"
+    - "node_modules/*"
+    - "target/*"
+    - "dist/*"
+    - ".git/*"
+    - "__pycache__/*"
+    - "*.tmp"
+
+# 备份配置
+backup:
+  auto_enabled: true
+  interval_hours: 24
+  max_backups: 10
+  include_cache: false

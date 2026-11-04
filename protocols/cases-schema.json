@@ -1,0 +1,285 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "结构化测试用例",
+  "version": "1.0",
+  "description": "保存在 projects/<平台>/<需求>/04-测试用例/cases.json",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "协议版本"
+    },
+    "requirement_id": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "string"
+    },
+    "tree": {
+      "type": "object",
+      "description": "用例目录树",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string",
+          "description": "根节点标题"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/treeNode"
+          }
+        }
+      }
+    },
+    "cases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/testCase"
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "total_count": {
+          "type": "integer"
+        },
+        "last_modified": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_version": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "version",
+    "requirement_id",
+    "tree",
+    "cases"
+  ],
+  "$defs": {
+    "treeNode": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "node_type": {
+          "type": "string",
+          "enum": [
+            "platform",
+            "module",
+            "section",
+            "workbook",
+            "case_ref"
+          ]
+        },
+        "case_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "当node_type=case_ref时关联用例ID"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/treeNode"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "node_type"
+      ]
+    },
+    "testCase": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "用例唯一ID"
+        },
+        "title": {
+          "type": "string",
+          "description": "tc-p{优先级}-{测试类型}: {场景标题}"
+        },
+        "directory_id": {
+          "type": "string",
+          "description": "所属目录节点ID"
+        },
+        "priority": {
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2
+          ]
+        },
+        "test_type": {
+          "type": "string",
+          "enum": [
+            "功能测试",
+            "性能测试",
+            "兼容性测试",
+            "易用性测试",
+            "安全性测试",
+            "稳定性测试",
+            "接口测试",
+            "自动化测试",
+            "安装部署测试",
+            "冒烟测试",
+            "回归测试",
+            "其他"
+          ]
+        },
+        "preconditions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "order": {
+                "type": "integer"
+              },
+              "action": {
+                "type": "string"
+              },
+              "expected": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "order",
+              "action",
+              "expected"
+            ]
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "platforms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requirement_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "asset_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requires_evidence": {
+          "type": "boolean",
+          "default": false
+        },
+        "automation_status": {
+          "type": "string",
+          "enum": [
+            "none",
+            "planned",
+            "in_progress",
+            "completed"
+          ],
+          "default": "none"
+        },
+        "created_by": {
+          "type": "string",
+          "enum": [
+            "manual",
+            "ai",
+            "import"
+          ]
+        },
+        "version": {
+          "type": "integer",
+          "description": "用例版本号"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "pending_review",
+            "confirmed",
+            "deprecated"
+          ],
+          "default": "draft"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "内容修订号；旧用例缺失时读取version，不覆盖旧日志"
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "file": {
+              "type": "string"
+            },
+            "sheet_id": {
+              "type": "string"
+            },
+            "sheet_index": {
+              "type": "integer"
+            },
+            "topic_id": {
+              "type": "string"
+            },
+            "directory_id": {
+              "type": "string"
+            },
+            "baseline": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "file",
+            "topic_id"
+          ]
+        },
+        "expected_results": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "用例整体期望；XMind中为tx唯一返回数据子节点"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "priority",
+        "test_type",
+        "steps"
+      ]
+    }
+  }
+}

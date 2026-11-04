@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "测试用例模板登记",
+  "version": "1.0",
+  "description": "保存在工作区 .blackbox/templates.json，模板文件本身保存在 templates/testcase 下。",
+  "type": "object",
+  "properties": {
+    "version": { "type": "string" },
+    "templates": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/template" }
+    }
+  },
+  "required": ["version", "templates"],
+  "$defs": {
+    "template": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["xmind", "excel"] },
+        "version": { "type": "string" },
+        "file_path": { "type": "string" },
+        "platform_id": { "type": ["string", "null"] },
+        "fingerprint": { "type": "string" },
+        "output_name_rule": { "type": "string" },
+        "mapping": { "type": "object" },
+        "required_fields": { "type": "array", "items": { "type": "string" } },
+        "is_default": { "type": "boolean" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "version",
+        "file_path",
+        "platform_id",
+        "fingerprint",
+        "output_name_rule",
+        "mapping",
+        "required_fields",
+        "is_default"
+      ]
+    }
+  }
+}

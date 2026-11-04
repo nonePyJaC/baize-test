@@ -1,0 +1,144 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AI任务协议",
+  "version": "1.0",
+  "description": "每个AI任务保存在 .blackbox/tasks/<任务ID>/ 目录下",
+  "type": "object",
+  "properties": {
+    "manifest.json": {
+      "type": "object",
+      "properties": {
+        "task_id": { "type": "string", "description": "任务唯一ID" },
+        "task_type": {
+          "type": "string",
+          "enum": [
+            "requirement_inventory",
+            "requirement_analysis",
+            "question_extraction",
+            "answer_impact_analysis",
+            "test_plan_generation",
+            "testcase_directory_suggestion",
+            "testcase_generation",
+            "testcase_validation",
+            "coverage_check",
+            "dev_impact_comparison",
+            "review_revision_suggestion",
+            "xmind_export",
+            "report_generation",
+            "knowledge_distillation"
+          ]
+        },
+        "requirement_id": { "type": "string" },
+        "platform": { "type": "string" },
+        "platform_id": { "type": "string" },
+        "objective": { "type": "string" },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "updated_at": { "type": "string", "format": "date-time" },
+        "lock_requirement": { "type": "boolean" },
+        "requirement_locked": { "type": "boolean" },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "running", "waiting_review", "completed", "failed"]
+        },
+        "created_at": { "type": "string", "format": "date-time" },
+        "started_at": { "type": ["string", "null"] },
+        "completed_at": { "type": ["string", "null"] },
+        "previous_task_id": { "type": ["string", "null"] },
+        "ai_tool": { "type": ["string", "null"], "description": "使用的AI工具名称" },
+        "review_status": { "type": "string", "enum": ["pending", "accepted", "rejected"] },
+        "reviewed_at": { "type": ["string", "null"], "format": "date-time" },
+        "review_note": { "type": "string" }
+      },
+      "required": ["task_id", "task_type", "requirement_id", "status", "created_at"]
+    },
+    "inputs.json": {
+      "type": "object",
+      "properties": {
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": { "type": "string", "description": "工作区相对路径" },
+              "fingerprint": { "type": "string", "description": "SHA256文件指纹" },
+              "role": { "type": "string", "description": "资料角色" }
+            },
+            "required": ["path"]
+          }
+        },
+        "knowledge_scope": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "scope": { "type": "string", "enum": ["general", "platform", "requirement"] },
+              "platform": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "templates": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["files"]
+    },
+    "write-scope.json": {
+      "type": "object",
+      "properties": {
+        "allowed_paths": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "允许AI新增或修改的路径模式"
+        },
+        "forbidden_paths": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "禁止修改的路径模式"
+        },
+        "output_dir": { "type": "string", "description": "主要产物输出目录" }
+      },
+      "required": ["allowed_paths", "output_dir"]
+    },
+    "output-schema.json": {
+      "type": "object",
+      "description": "结构化输出契约，可选"
+    },
+    "progress.json": {
+      "type": "object",
+      "properties": {
+        "status": { "type": "string", "enum": ["pending", "running", "waiting_review", "completed", "failed"] },
+        "updated_at": { "type": "string", "format": "date-time" },
+        "message": { "type": "string" }
+      }
+    },
+    "result.json": {
+      "type": "object",
+      "properties": {
+        "outputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": { "type": "string" },
+              "type": { "type": "string" },
+              "summary": { "type": "string" }
+            }
+          }
+        },
+        "summary": { "type": "string" },
+        "validation": {
+          "type": "object",
+          "properties": {
+            "passed": { "type": "boolean" },
+            "errors": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "pending_items": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "identifier": "shell",
+  "description": "受限的外部程序访问，仅允许执行 Git 状态和安全更新命令",
+  "windows": ["main"],
+  "permissions": [
+    {
+      "identifier": "shell:allow-execute",
+      "allow": [
+        {
+          "name": "git",
+          "cmd": "git",
+          "sidecar": false,
+          "args": true
+        }
+      ]
+    }
+  ]
+}

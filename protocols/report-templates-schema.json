@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "测试报告模板登记",
+  "version": "1.0",
+  "description": "保存在工作区 .blackbox/report-templates.json，模板文件本身保存在 templates/report 下。",
+  "type": "object",
+  "properties": {
+    "version": { "type": "string" },
+    "templates": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/template" }
+    }
+  },
+  "required": ["version", "templates"],
+  "$defs": {
+    "template": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["markdown", "docx"] },
+        "version": { "type": "string" },
+        "file_path": { "type": "string" },
+        "platform_id": { "type": ["string", "null"] },
+        "fingerprint": { "type": "string" },
+        "placeholders": { "type": "array", "items": { "type": "string" } },
+        "fixed_sections": { "type": "array", "items": { "type": "string" } },
+        "output_name_rule": { "type": "string" },
+        "is_default": { "type": "boolean" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "version",
+        "file_path",
+        "platform_id",
+        "fingerprint",
+        "placeholders",
+        "fixed_sections",
+        "output_name_rule",
+        "is_default"
+      ]
+    }
+  }
+}

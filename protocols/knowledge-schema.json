@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "知识候选与知识库协议",
+  "version": "1.0",
+  "description": "知识候选保存在需求目录的08-知识候选/knowledge-candidates.json，审核发布后写入knowledge/通用或平台知识目录的knowledge.json",
+  "definitions": {
+    "sourceRef": {
+      "type": "object",
+      "properties": {
+        "path": { "type": "string", "description": "工作区相对路径；工作区外来源保留可打开的绝对路径" },
+        "kind": { "type": "string", "enum": ["question_answer", "xmind_change", "case_review", "test_execution", "ai_distillation"] },
+        "label": { "type": "string" },
+        "locator": { "type": "string" }
+      },
+      "required": ["path", "kind", "label", "locator"]
+    },
+    "snapshot": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "body": { "type": "string" },
+        "scope": { "type": "string", "enum": ["general", "platform", "requirement"] },
+        "platform_id": { "type": ["string", "null"] },
+        "requirement_id": { "type": ["string", "null"] },
+        "knowledge_type": { "type": "string" },
+        "evidence_status": { "type": "string" },
+        "source_refs": { "type": "array", "items": { "$ref": "#/definitions/sourceRef" } },
+        "applicable_version": { "type": "string" },
+        "effective_at": { "type": ["string", "null"] },
+        "expires_at": { "type": ["string", "null"] },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "status": { "type": "string", "enum": ["candidate", "published", "rejected", "deprecated"] },
+        "version": { "type": "integer", "minimum": 1 }
+      },
+      "required": ["id", "title", "body", "scope", "knowledge_type", "evidence_status", "source_refs", "tags", "status", "version"]
+    },
+    "item": {
+      "allOf": [
+        { "$ref": "#/definitions/snapshot" },
+        {
+          "type": "object",
+          "properties": {
+            "created_at": { "type": "string" },
+            "updated_at": { "type": "string" },
+            "created_by": { "type": "string" },
+            "published_at": { "type": ["string", "null"] },
+            "published_path": { "type": ["string", "null"] },
+            "review_note": { "type": "string" },
+            "history": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "version": { "type": "integer", "minimum": 1 },
+                  "action": { "type": "string" },
+                  "changed_at": { "type": "string" },
+                  "changed_by": { "type": "string" },
+                  "note": { "type": "string" },
+                  "snapshot": { "$ref": "#/definitions/snapshot" }
+                },
+                "required": ["version", "action", "changed_at", "changed_by", "snapshot"]
+              }
+            }
+          },
+          "required": ["created_at", "updated_at", "created_by", "history"]
+        }
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "title": "候选注册表",
+      "type": "object",
+      "properties": {
+        "version": { "type": "string" },
+        "registry_type": { "const": "candidate" },
+        "platform_id": { "type": "string" },
+        "requirement_id": { "type": "string" },
+        "updated_at": { "type": "string" },
+        "candidates": { "type": "array", "items": { "$ref": "#/definitions/item" } }
+      },
+      "required": ["version", "registry_type", "platform_id", "requirement_id", "updated_at", "candidates"]
+    },
+    {
+      "title": "正式知识注册表",
+      "type": "object",
+      "properties": {
+        "version": { "type": "string" },
+        "registry_type": { "const": "published" },
+        "scope": { "type": "string", "enum": ["general", "platform"] },
+        "platform_id": { "type": ["string", "null"] },
+        "updated_at": { "type": "string" },
+        "items": { "type": "array", "items": { "$ref": "#/definitions/item" } }
+      },
+      "required": ["version", "registry_type", "scope", "updated_at", "items"]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "identifier": "core",
+  "description": "核心能力：事件订阅（文件监听事件）等 Tauri 基础 API",
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "core:default",
+    "core:window:allow-show",
+    "core:window:allow-set-focus",
+    "core:window:allow-close",
+    "core:window:allow-destroy"
+  ]
+}
